@@ -1,0 +1,11 @@
+{
+  "gerado_em": "2026-09-08T23:54:36",
+  "fontes": {
+    "ANEEL SIGA": "https://dadosabertos.aneel.gov.br/pt_BR/dataset/siga-sistema-de-informacoes-de-geracao-da-aneel",
+    "ANEEL MMGD": "https://dadosabertos.aneel.gov.br/dataset/relacao-de-empreendimentos-de-geracao-distribuida",
+    "ONS Balanço": "https://dados.ons.org.br/dataset/balanco-energia-subsistema",
+    "ONS Carga": "https://dados.ons.org.br/dataset/carga-energia",
+    "CCEE PLD": "https://dadosabertos.ccee.org.br/dataset/pld_media_mensal"
+  },
+  "observacao_unidades": "MWmed foi convertido para Energia_MWh assumindo granularidade horária dos arquivos ONS. MWmed não é somado como energia."
+}

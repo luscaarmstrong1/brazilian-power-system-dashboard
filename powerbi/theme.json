@@ -1,0 +1,20 @@
+{
+  "name": "Brazilian Power System",
+  "dataColors": ["#1F77B4", "#2CA58D", "#F2C230", "#C44E52", "#9467BD", "#5B8C3A", "#7F7F7F"],
+  "background": "#F8FAFC",
+  "foreground": "#14212B",
+  "tableAccent": "#1F77B4",
+  "visualStyles": {
+    "*": {
+      "*": {
+        "title": [
+          {
+            "fontFamily": "Segoe UI",
+            "fontSize": 11,
+            "color": { "solid": { "color": "#14212B" } }
+          }
+        ]
+      }
+    }
+  }
+}

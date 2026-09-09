@@ -1,0 +1,55 @@
+project:
+  name: Dashboard Analítico do Sistema Elétrico Brasileiro
+  timezone: America/Sao_Paulo
+  extraction_date: 2026-09-08
+
+period:
+  start_year: 2021
+  end_year: 2026
+
+cache:
+  enabled: true
+  force_download: false
+  max_mmgd_records: 0
+
+http:
+  timeout_seconds: 60
+  retries: 3
+
+paths:
+  raw: data/raw
+  staging: data/staging
+  processed: data/processed
+  reports: reports
+
+sources:
+  aneel_siga:
+    active: true
+    portal_url: https://dadosabertos.aneel.gov.br/pt_BR/dataset/siga-sistema-de-informacoes-de-geracao-da-aneel
+    ckan_api: https://dadosabertos.aneel.gov.br/api/3/action
+    package_id: siga-sistema-de-informacoes-de-geracao-da-aneel
+    resource_contains: siga-empreendimentos-geracao.csv
+  aneel_mmgd:
+    active: true
+    portal_url: https://dadosabertos.aneel.gov.br/dataset/relacao-de-empreendimentos-de-geracao-distribuida
+    ckan_api: https://dadosabertos.aneel.gov.br/api/3/action
+    package_id: relacao-de-empreendimentos-de-geracao-distribuida
+    resource_contains: empreendimento-geracao-distribuida.zip
+  ons_balanco_subsistema:
+    active: true
+    portal_url: https://dados.ons.org.br/dataset/balanco-energia-subsistema
+    ckan_api: https://dados.ons.org.br/api/3/action
+    package_id: balanco-energia-subsistema
+    resource_prefix: Balanco_de_Energia_Subsistema
+  ons_carga_diaria:
+    active: true
+    portal_url: https://dados.ons.org.br/dataset/carga-energia
+    ckan_api: https://dados.ons.org.br/api/3/action
+    package_id: carga-energia
+    resource_prefix: Carga_Energia
+  ccee_pld:
+    active: true
+    portal_url: https://dadosabertos.ccee.org.br/dataset/pld_media_mensal
+    ckan_api: https://dadosabertos.ccee.org.br/api/3/action
+    package_id: 6f48c19d-7130-4bff-9efe-48ed9808627e
+    resource_contains: pld_media_mensal
