@@ -1,108 +1,105 @@
-# Brazilian Power System Analytics Dashboard
+# Dashboard Analítico do Sistema Elétrico Brasileiro
+### *Brazilian Power System Analytics Dashboard*
 
-Power Systems • Electrical Engineering • Energy Analytics • Power BI • Python
+[![Simulador Online](https://img.shields.io/badge/Simulador_Interativo-GitHub_Pages-D3A15C?style=for-the-badge&logo=github)](https://luscaarmstrong1.github.io/brazilian-power-system-dashboard/)
+[![Portfólio Lucas Santos](https://img.shields.io/badge/Portf%C3%B3lio-Lucas_Santos-071827?style=for-the-badge&logo=vercel)](https://lucas-santos-portfolio-zeta.vercel.app/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Lucas_Silva_Santos-102B42?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/lucasssantos1/)
+[![Python](https://img.shields.io/badge/Python-Engenharia_%26_Dados-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://github.com/luscaarmstrong1/brazilian-power-system-dashboard)
 
-## Overview
+> **Camada 03 • Ecossistema de Engenharia, Energia, Dados & Automação**
+> Análise integrada do SIN (ONS & ANEEL): capacidade instalada (SIGA), balanço de geração e carga por subsistema, expansão renovável e geração distribuída (MMGD).
 
-This portfolio project builds a reproducible analytics platform for the Brazilian power system using official public datasets. It separates installed capacity, effective generation, system load, distributed generation and market prices so that MW, MWmed, MWh and R$/MWh are never mixed silently.
+---
 
-## Business / Engineering Question
+## Acesse o Simulador Interativo e Demonstração Online
 
-How is Brazil's electricity system structured, where is capacity located, what is effectively generated in the SIN, how does load behave and how are renewables and distributed generation changing the system?
+- **Simulador Paramétrico Web (GitHub Pages):** [https://luscaarmstrong1.github.io/brazilian-power-system-dashboard/](https://luscaarmstrong1.github.io/brazilian-power-system-dashboard/)
+- **Vitrine no Portfólio Principal:** [https://lucas-santos-portfolio-zeta.vercel.app/#arquitetura](https://lucas-santos-portfolio-zeta.vercel.app/#arquitetura)
 
-## Dashboard Preview
+---
 
-Mockups are available in `assets/mockups/` and screenshots in `assets/screenshots/`.
+## Visão Geral e Problema de Engenharia
 
-## Brazilian Power System
+Plataforma analítica do Sistema Interligado Nacional (SIN): capacidade instalada (SIGA/ANEEL), geração e carga por subsistema (ONS), expansão solar/eólica e geração distribuída (MMGD) com Python, Streamlit e Power BI.
 
-Brazil is not always the same analytical scope as the SIN. ANEEL capacity and MMGD datasets are national datasets. ONS generation and load datasets refer to the Sistema Interligado Nacional (SIN), according to ONS dataset descriptions. The dashboard labels each KPI with its scope.
+### Indicadores-Chave do Projeto (Caso-Base)
 
-## Data Sources
+| Indicador Técnico | Resultado / Escopo | Detalhamento de Engenharia |
+| :--- | :--- | :--- |
+| **Matriz Elétrica SIN** | `200+ GW` | Capacidade fiscalizada SIGA/ANEEL |
+| **Subsistemas ONS** | `SE/CO • S • NE • N` | Balanço energético e intercâmbio |
+| **Expansão Renovável** | `> 88% Limpa` | Hídrica, Eólica, Solar e Biomassa |
+| **Geração Distribuída** | `MMGD Nacional` | Evolução estadual e por classe |
 
-- ANEEL SIGA: installed generation capacity and plant metadata.
-- ANEEL MMGD: micro and mini distributed generation connections.
-- ONS Energy Balance by Subsystem: hourly generation and load in MWmed by subsystem.
-- ONS Daily Load: daily load in MWmed by subsystem.
-- CCEE PLD: monthly average PLD when available through the official CKAN portal.
+---
 
-## Generation Capacity
+## Arquitetura do Sistema e Fluxo de Modelagem
 
-Installed capacity is modeled from ANEEL SIGA. The source field is classified into a documented grouped source dimension without changing the original source label.
+1. **Etapa 01:** Coleta e Padronização de Dados Públicos (Séries históricas ONS, SIGA/ANEEL e MMGD)
+2. **Etapa 02:** Engenharia de Dados & Separação de Grandezas (Distinção rigorosa entre MW instalado, MWmed e MWh)
+3. **Etapa 03:** Modelagem Dimensional Star Schema (Tabelas fato de geração/carga e dimensões geográficas e energéticas)
+4. **Etapa 04:** Visualização Executiva em Streamlit & Power BI (Análise de sazonalidade, rampa horária e expansão)
 
-## Electricity Generation
+---
 
-Effective generation is modeled from ONS hourly subsystem balance. Values remain in MWmed and are not combined with MW installed capacity.
+## Fundamentação Física, Matemática e Regulatória
 
-## System Load
+### 1. Fator de Capacidade Efetivo por Fonte
+```text
+FC = Geração_Média(MWmed) / Capacidade_Instalada(MW)
+```
 
-Load is modeled from ONS balance and daily load datasets. The SIN scope is explicit.
+### 2. Balanço Energético por Subsistema SIN
+```text
+Carga_SIN(t) = G_Hidr(t) + G_Eól(t) + G_Sol(t) + G_Term(t) ± Intercâmbio(t)
+```
 
-## Distributed Generation
+### 3. Carga Líquida (Efeito Pato / Duck Curve)
+```text
+Carga_Líquida(t) = Carga_Global(t) - [G_Solar_Centralizada(t) + G_MMGD(t)]
+```
 
-MMGD is modeled separately from centralized generation. The default extractor uses a configurable official CKAN Datastore extract to avoid repeatedly downloading the full large file.
+---
 
-## Renewable Energy
+## Painéis Analíticos e Evidências Visuais
 
-Renewable classification is defined in `docs/source_classification.md`. Nuclear is treated as non-renewable low-carbon, not renewable.
+### Visão Geral da Matriz Elétrica Brasileira (SIN)
+![Visão Geral da Matriz Elétrica Brasileira (SIN)](assets/screenshots/overview.png)
 
-## Geographic Analysis
+### Despacho e Geração por Fonte Energética
+![Despacho e Geração por Fonte Energética](assets/screenshots/generation.png)
 
-The model includes UF, region, municipality and coordinates when present in official source fields.
+### Curva de Carga e Demanda por Subsistema
+![Curva de Carga e Demanda por Subsistema](assets/screenshots/load.png)
 
-## Data Architecture
+### Participação Renovável e Complementaridade Eólica-Solar
+![Participação Renovável e Complementaridade Eólica-Solar](assets/screenshots/renewables.png)
 
-The project uses a star schema with multiple fact tables:
+---
 
-- `Fato_CapacidadeInstalada`
-- `Fato_Geracao`
-- `Fato_Carga`
-- `Fato_MMGD`
-- `Dim_Calendario`
-- `Dim_FonteEnergia`
-- `Dim_UF`
-- `Dim_Situacao`
-
-## Technologies
-
-Python, CSV/Parquet-ready pipeline, Power BI DAX/Power Query specifications, Streamlit/Plotly-ready web app and pytest tests.
-
-## Key Metrics
-
-Installed capacity, renewable capacity share, solar/wind/hydro/thermal capacity, MMGD capacity and systems, ONS generation by source, average SIN load and peak SIN load.
-
-## Insights
-
-Generated insights are written to `docs/insights.md` after `python scripts/update_all.py` runs.
-
-## How to Run
+## Como Executar Localmente
 
 ```bash
-python -m venv .venv
-.venv\Scripts\activate
+# 1. Clone o repositório
+git clone https://github.com/luscaarmstrong1/brazilian-power-system-dashboard.git
+cd brazilian-power-system-dashboard
+
+# 2. Instale as dependências e execute a suíte analítica
 pip install -r requirements.txt
-python scripts/update_all.py
+pytest
 streamlit run app.py
 ```
 
-## Data Update
+> **Nota Técnica:** Este projeto utiliza modelagem determinística auditável e séries sintéticas estruturadas para demonstração de arquitetura de engenharia elétrica, ciência de dados e tomada de decisão técnico-econômica. Não substitui projeto executivo, parecer de acesso da concessionária ou emissão de ART específica de campo.
 
-Run:
+---
 
-```bash
-python scripts/update_all.py
-```
+## Autor e Responsável Técnico
 
-Set `cache.force_download: true` to refresh cached downloads. Set `cache.max_mmgd_records: 0` to download the full ANEEL MMGD CSV.
+**Lucas Silva Santos**
+*Engenheiro Eletricista & Gerente de Projetos*
+Energia • Dados • Inteligência Artificial • Automação • São João da Boa Vista, SP • Itajubá, MG
 
-## Limitations
-
-The repository does not create a fake PBIX. It provides the processed datasets, Power Query, DAX, theme, model and dashboard specification needed to assemble a native Power BI report.
-
-## Disclaimer
-
-This is an analytical portfolio project based on public official data. It is not an operational planning, dispatch or regulatory decision system.
-
-## Author
-
-Electrical Engineering and Energy Analytics portfolio project.
+- **Portfólio:** [https://lucas-santos-portfolio-zeta.vercel.app/](https://lucas-santos-portfolio-zeta.vercel.app/)
+- **LinkedIn:** [linkedin.com/in/lucasssantos1](https://www.linkedin.com/in/lucasssantos1/)
+- **GitHub:** [@luscaarmstrong1](https://github.com/luscaarmstrong1)
